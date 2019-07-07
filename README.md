@@ -8,7 +8,7 @@ to scientists without writing thousands of lines of custom code
 dedicated to the particular problem they are studying.
 
 This repository contains simple examples of MCA usage in
-[LAMMPS](https://lammps.sandia.gov)
+[LAMMPS](https://lammps.sandia.gov).
 MCA is a language to describe the behavior of simple "agents"
 which can make decisions in response to collisions
 (or other changes in their local environment).
