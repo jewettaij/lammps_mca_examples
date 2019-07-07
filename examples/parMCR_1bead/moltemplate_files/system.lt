@@ -1,0 +1,18 @@
+import "ParM.lt"
+
+# Create 1000 free copies of ATP-bound ParM (dimers)
+m = new TF [8].move(24.0,  0.0,  0.0)
+           [4].move(0.0,  24.0,  0.0)
+           [4].move(0.0,   0.0, 24.0)
+
+m[*][*][*].move(-84, -36, -36)
+
+write_once("Data Boundary") {
+  -96  96  xlo xhi
+  -48  48  ylo yhi
+  -48  48  zlo zhi
+}
+
+
+
+

@@ -1,0 +1,62 @@
+import "force_field.lt"
+
+# Define an object named "Monomer"
+Monomer inherits ForceField {
+  # AtomId  MolId  AtomType    X    Y     Z
+  write("Data Atoms") {
+    $atom:a $mol:... @atom:A 0.00  0.00  0.00
+    $atom:b $mol:... @atom:B 0.50  0.00  0.00
+  }
+  # BondID    BondType    AtomID1   AtomID2
+  write("Data Bonds") {
+    $bond:intra  @bond:R  $atom:a  $atom:b
+  }
+}
+
+# Define a “CircularPolymer” object (Monomers linked together)
+CircularPolymer inherits ForceField {
+  create_var {$mol}
+  mon = new Monomer.move(0,-3.82,0) [24].rot(15.0,0,0,1)
+  write("Data Atoms") { # Add a W atom & change first atom to At
+    $atom:w        $mol @atom:W   0.00 -3.82  0.70  #Add a W particle
+    $atom:mon[0]/a $mol @atom:At  0.00 -3.82  0.00  #Change 1st atom to At
+  }
+  write("Data Bonds") {  # connect the atoms together with bonds
+    $bond:v          @bond:V $atom:mon[0]/a  $atom:w         #<-- bond a-w
+    $bond:backbone1  @bond:L $atom:mon[0]/b  $atom:mon[1]/a  #<-- link the
+    $bond:backbone2  @bond:L $atom:mon[1]/b  $atom:mon[2]/a  #    monomers
+    $bond:backbone3  @bond:L $atom:mon[2]/b  $atom:mon[3]/a  #    together
+    $bond:backbone4  @bond:L $atom:mon[3]/b  $atom:mon[4]/a  #       :
+    $bond:backbone5  @bond:L $atom:mon[4]/b  $atom:mon[5]/a
+    $bond:backbone6  @bond:L $atom:mon[5]/b  $atom:mon[6]/a
+    $bond:backbone7  @bond:L $atom:mon[6]/b  $atom:mon[7]/a
+    $bond:backbone8  @bond:L $atom:mon[7]/b  $atom:mon[8]/a
+    $bond:backbone9  @bond:L $atom:mon[8]/b  $atom:mon[9]/a
+    $bond:backbone10 @bond:L $atom:mon[9]/b  $atom:mon[10]/a
+    $bond:backbone11 @bond:L $atom:mon[10]/b $atom:mon[11]/a
+    $bond:backbone12 @bond:L $atom:mon[11]/b $atom:mon[12]/a
+    $bond:backbone13 @bond:L $atom:mon[12]/b $atom:mon[13]/a
+    $bond:backbone14 @bond:L $atom:mon[13]/b $atom:mon[14]/a
+    $bond:backbone15 @bond:L $atom:mon[14]/b $atom:mon[15]/a
+    $bond:backbone16 @bond:L $atom:mon[15]/b $atom:mon[16]/a
+    $bond:backbone17 @bond:L $atom:mon[16]/b $atom:mon[17]/a
+    $bond:backbone18 @bond:L $atom:mon[17]/b $atom:mon[18]/a
+    $bond:backbone19 @bond:L $atom:mon[18]/b $atom:mon[19]/a
+    $bond:backbone20 @bond:L $atom:mon[19]/b $atom:mon[20]/a
+    $bond:backbone21 @bond:L $atom:mon[20]/b $atom:mon[21]/a
+    $bond:backbone22 @bond:L $atom:mon[21]/b $atom:mon[22]/a
+    $bond:backbone23 @bond:L $atom:mon[22]/b $atom:mon[23]/a
+    $bond:backbone24 @bond:L $atom:mon[23]/b $atom:mon[0]/a
+  }
+}
+
+
+# Instantiate (create a copy of) a CircularPolymer
+polymer = new CircularPolymer
+
+
+write_once("Data Boundary") {
+  -15.0 15.0  xlo xhi  # simulation periodic box size
+  -15.0 15.0  ylo yhi
+  -15.0 15.0  zlo zhi
+}

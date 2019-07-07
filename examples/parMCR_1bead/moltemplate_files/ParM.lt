@@ -1,0 +1,137 @@
+# All of the "molecules" in this simple model are identical and contain 1 atom.
+# What will distinguish them from eachother are the rules that we will
+# define which govern how interactions between them form and break bonds
+# and change atom types.  (See "transition_rules.lt")
+
+
+TF {                         #<-- ParM+ATP ("F" <=> Free)
+  # AtomID MolID AtomType  x   y   z
+  write("Data Atoms") {
+    $atom  $mol  @atom    0.0 0.0 0.0
+  }
+  write_once("Data Masses") {
+    @atom 1.0
+  }
+  #       AtomType AtomType style epsilon sigma rcutoff
+  write_once("In Settings") {
+    pair_coeff @atom @atom  lj/cut  1.0   6.24  7.0 
+  }
+  # Note: 7.0 = filament width (nm)
+}
+
+TB {                          #<-- ParM+ATP ("B" <=> bound)
+  # AtomID MolID AtomType  x   y   z
+  write("Data Atoms") {
+    $atom  $mol  @atom    0.0 0.0 0.0
+  }
+  write_once("Data Masses") {
+    @atom 1.0
+  }
+  #       AtomType AtomType style epsilon sigma rcutoff
+  write_once("In Settings") {
+    pair_coeff @atom @atom  lj/cut  1.0   6.24  7.0 
+  }
+  # Note: 7.0 = filament width (nm)
+}
+
+TE {                         #<-- ParM+ATP ("E" <=> End of polymer)
+  # AtomID MolID AtomType  x   y   z
+  write("Data Atoms") {
+    $atom  $mol  @atom    0.0 0.0 0.0
+  }
+  write_once("Data Masses") {
+    @atom 1.0
+  }
+  #       AtomType AtomType style epsilon sigma rcutoff
+  write_once("In Settings") {
+    pair_coeff @atom @atom  lj/cut  1.0   6.24  7.0 
+  }
+  # Note: 7.0 = filament width (nm)
+}
+
+
+
+
+
+DF {                         #<-- ParM+ADP ("F" <=> Free)
+  # AtomID MolID AtomType  x   y   z
+  write("Data Atoms") {
+    $atom  $mol  @atom    0.0 0.0 0.0
+  }
+  write_once("Data Masses") {
+    @atom 1.0
+  }
+  #       AtomType AtomType style epsilon sigma rcutoff
+  write_once("In Settings") {
+    pair_coeff @atom @atom  lj/cut  1.0   6.24  7.0 
+  }
+  # Note: 7.0 = filament width (nm)
+}
+
+DB {                          #<-- ParM+ADP ("B" <=> bound)
+  # AtomID MolID AtomType  x   y   z
+  write("Data Atoms") {
+    $atom  $mol  @atom    0.0 0.0 0.0
+  }
+  write_once("Data Masses") {
+    @atom 1.0
+  }
+  #       AtomType AtomType style epsilon sigma rcutoff
+  write_once("In Settings") {
+    pair_coeff @atom @atom  lj/cut  1.0   6.24  7.0 
+  }
+  # Note: 7.0 = filament width (nm)
+}
+
+DE {                         #<-- ParM+ADP ("E" <=> End of polymer)
+  # AtomID MolID AtomType  x   y   z
+  write("Data Atoms") {
+    $atom  $mol  @atom    0.0 0.0 0.0
+  }
+  write_once("Data Masses") {
+    @atom 1.0
+  }
+  #       AtomType AtomType style epsilon sigma rcutoff
+  write_once("In Settings") {
+    pair_coeff @atom @atom  lj/cut  1.0   6.24  7.0 
+  }
+  # Note: 7.0 = filament width (nm)
+}
+
+
+# The persistence length, (P), of ParM filaments is approximately 10um according
+# to Gerdes++Jensen_MolMicrobiol2000 and Choi++Garner++DycheMullins_JBC2008.
+# The bending harmonic constant k_a = (P/b)*kB*T ~= 851.66,
+# where kB*T = 0.001987207*300kCal/mole
+#   and Uangle(theta) = K*(theta-theta0)^2, and K = k_a/2
+# and "b" is the size of each "monomer" (7nm in this particular model)
+
+
+write_once("In Settings") { #style   K     r0
+  bond_coeff  @bond:F    harmonic 100.0    7.0 #"filament"
+  angle_coeff @angle:S   harmonic 851.66 180.0 #"filament" persistence=10um
+}
+
+
+# The rules which control how bonds are created 
+# and destroyed are located in a separate file "transition_rules":
+
+import "transition_rules.lt"
+
+
+# LAMMPS supports a large number of force-field styles. We must select
+# which ones we need. This information belongs in the "In Init" section (and
+# (you can specify it anywhere in your LT files, multiple times if you like).
+# If different molecules use different force-field styles, you can use hybrid
+# styles.  (In this example the molecules share the same pair_style.)
+
+write_once("In Init") {
+  units           lj
+  atom_style      molecular
+  pair_style      hybrid lj/cut 10.0
+  bond_style      hybrid harmonic
+  angle_style     hybrid harmonic
+  pair_modify     mix arithmetic
+  special_bonds   lj 1.0 1.0 1.0 # extra 100
+}
+

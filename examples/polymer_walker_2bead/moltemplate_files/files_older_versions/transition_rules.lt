@@ -1,0 +1,31 @@
+import "force_field.lt"
+
+# Add some rules defining how bonds form & break:
+
+TransitionRules inherits ForceField {
+  write_once("system.in.transitions") {
+
+    # Transitions 1 and 2: move the walker attachment site (Aw)
+    fix tr1 all bond/change 100  delay 1                     &
+      if atoms @atom:Aw @atom:B  and  bond @bond:R           &
+      -> atoms @atom:A  @atom:Bw
+    fix tr2 all bond/change 100  delay 2                     &
+      if atoms @atom:Bw @atom:A  and  bond @bond:L           &
+      -> atoms @atom:B  @atom:Aw
+
+    # Transition 3: Form a bond with the new attachment site (Aw)
+    fix tr3 all bond/new    100  delay 3                     &
+      if atoms @atom:W  @atom:Aw  and  distance <= 1.5       &
+      -> atoms @atom:Ww @atom:Aw  and  bond @bond:v 
+          and angle @angle:Ra  @atom:B @atom:Aw @atom:W
+
+    # Transition 4: Break the bond to the old attachment site
+    fix tr4 all bond/change 100  delay 4                     &
+      if atoms @atom:Ww @atom:A   and  bond @bond:v          &
+      -> atoms @atom:W  @atom:A   and  bond BREAK
+  }
+}
+
+# (Note: I put these rules inside another object "TransitionRules" 
+#  which inherits “ForceField” because it is the most elegant way
+#  to access the atom, bond, and angle types, defined there.)

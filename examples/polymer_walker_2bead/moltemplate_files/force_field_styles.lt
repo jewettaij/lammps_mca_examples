@@ -1,0 +1,11 @@
+# You must list the force-field styles you use in "In Init"
+# as well as the atom_style and other LAMMPS specific settings.
+write_once("In Init") {
+  atom_style  molecular
+  units       lj  #<- temperature is in units of kB*T not Kelvin
+  pair_style  hybrid lj/cut  1.0  #  sigmamin
+  bond_style  hybrid harmonic
+  angle_style hybrid harmonic
+  # Add the next line when running "active matter" simulations:
+  special_bonds lj/coul 1.0 1.0 1.0
+}

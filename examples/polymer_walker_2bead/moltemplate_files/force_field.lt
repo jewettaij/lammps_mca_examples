@@ -1,0 +1,41 @@
+# The "ForceField" is a force-field environment object containing 
+# force-field data, atomic masses, and bond rules.  Later, when we
+# define molecules (such as "Monomer" and "CircularPolymer"), we can inherit
+# atom types and bond-rules from this object.  This will automatically
+# assign bonds and angular interactions according to atom (and bond) type.
+
+ForceField {
+  write_once("In Settings") { # force field parameters:
+    pair_coeff  @atom:A   @atom:A   lj/cut 1.0 0.5 0.5
+    pair_coeff  @atom:At  @atom:At  lj/cut 1.0 0.5 0.5
+    pair_coeff  @atom:AT  @atom:AT  lj/cut 1.0 0.5 0.5
+    pair_coeff  @atom:B   @atom:B   lj/cut 1.0 0.5 0.5
+    pair_coeff  @atom:Bt  @atom:Bt  lj/cut 1.0 0.5 0.5
+    pair_coeff  @atom:W   @atom:W   lj/cut 1.0 0.9 0.9
+    pair_coeff  @atom:Wt  @atom:Wt  lj/cut 1.0 0.9 0.9
+    bond_coeff  @bond:L    harmonic  100.0 0.5
+    bond_coeff  @bond:R    harmonic  100.0 0.5
+    bond_coeff  @bond:V    harmonic  100.0 0.7
+    angle_coeff @angle:S   harmonic  15.0 180.0
+    angle_coeff @angle:Ra  harmonic  15.0 90.0
+  }
+  write_once("Data Masses") {
+    @atom:A  1.0  #(NOTE1: Mass can be chosen to increase 
+    @atom:At 1.0  # numerical stability and maximize time step.
+    @atom:AT 1.0  # Atoms participating in interactions with
+    @atom:B  1.0  # sharply varying forces need larger mass
+    @atom:Bt 1.0  # to avoid numerical explosions.  Zero-mass
+    @atom:W  1.0   # NOTE2: Zero-mass "Brownian dynamics" sims
+    @atom:Wt 1.0   # are usually less efficient.)
+  }
+  # Rules for generating initial angular interactions (at t=0)
+  write_once("Data Angles By Type") {
+    @angle:Ra @atom:W  @atom:At @atom:B 
+    @angle:S  @atom:A  @atom:B  @atom:A
+    @angle:S  @atom:At @atom:B  @atom:A
+    @angle:S  @atom:B  @atom:A  @atom:B
+    @angle:S  @atom:B  @atom:At @atom:B
+  }
+  import "force_field_styles.lt"
+  import "transition_rules.lt"
+}

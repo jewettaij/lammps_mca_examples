@@ -1,0 +1,38 @@
+# -- Init Section --
+
+include system.in.init
+
+# -- Atom Definition Section --
+read_data system.data &
+          extra/bond/per/atom 10 &
+          extra/angle/per/atom 20 &
+          extra/special/per/atom 100
+
+
+# -- Settings Section --
+
+include system.in.settings
+include system.in.transitions
+#comm_modify cutoff 2
+
+# -- Run Section --
+
+timestep        0.004
+dump            1 all custom 10 traj.lammpstrj id mol type x y z ix iy iz
+
+thermo_style    custom step temp pe etotal epair ebond eangle edihed
+thermo          1  # time interval for printing out "thermo" data
+
+
+# To use Langevin dynamics in LAMMPS you need both "fix langevin" and "fix nve".
+# (See http://lammps.sandia.gov/doc/fix_langevin.html for details.)
+
+fix fxlan all langevin  1.0  1.0  5.0 48279
+fix fxnve all nve
+fix fxcen all recenter  0.0 0.0 0.0
+fix 1 all momentum 100 linear 1 1 1 angular
+
+run		50000
+
+write_data  system_t=50000.data
+

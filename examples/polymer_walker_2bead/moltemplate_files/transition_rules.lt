@@ -1,0 +1,29 @@
+write_once("In Transitions") {
+
+  # Transitions 1 and 2: move the walker attachment site (At)
+  fix tr1 all bond/change 100  delay 1  and prob 0.8       &
+    if atoms @atom:At @atom:B  and  bond @bond:R           &
+    -> atoms @atom:A  @atom:Bt
+  fix tr2 all bond/change 100  delay 2                     &
+    if atoms @atom:Bt @atom:A  and  bond @bond:L           &
+    -> atoms @atom:B  @atom:AT
+
+  # Transition 3: Form a bond with the new attachment site (At)
+  fix tr3 all bond/new 100                                 &
+    @atom:W  @atom:AT  1.5  @bond:V  atype @angle:Ra       &
+    inew @atom:Wt jnew @atom:At  delay 3
+  # The syntax of the command above is inconsistent with fix bond/change.
+  # Later, I will change the syntax to the following, which is more consistent:
+  #fix tr3 all bond/new    100  delay 3                     &
+  #  if atoms @atom:W  @atom:AT and  distance <= 1.5        &
+  #  -> atoms @atom:Wt @atom:At  and  bond @bond:V          &
+  #      and angle @angle:Ra  @atom:B @atom:At @atom:W
+
+  # Transition 4: Break the bond to the old attachment site
+  fix tr4 all bond/change 100  delay 4                     &
+    if atoms @atom:Wt @atom:A   and  bond @bond:V          &
+    -> atoms @atom:W  @atom:A   and  bond BREAK
+
+  neighbor 1.5 bin  #<--make sure this number is at least as large
+                    # as the largest "bond/new" distance threshold
+}
