@@ -1,7 +1,5 @@
-lammps_mca_examples
+Molecular Cellular Automata Examples for LAMMPS
 ===========
-
-## Molecular Cellular Automata Examples for LAMMPS
 
 The simulation of complex chains of chemical reactions that make life
 possible cannot be run with traditional molecular dynamics software.
@@ -21,7 +19,9 @@ Videos of MCA simulations were too large to include in this repository,
 However some MCA videos are available on youtube.
 
    https://www.youtube.com/watch?v=0cuEeCdyokU
+
    https://www.youtube.com/watch?v=QO4LbHGAgxU
+
    https://www.youtube.com/watch?v=EEbt07vZHew
 
 ## WARNING: These examples are not yet ready for public use.
