@@ -47,5 +47,5 @@ and the code for the new MCA lammps fix.
 
 ## License
 
-Although currently not recommended for use,
+Although not recommended for use,
 these examples are available under the terms of the MIT license.
