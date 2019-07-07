@@ -9,7 +9,7 @@ write_once("system.in.transitions") {
     inew @atom:TE jnew @atom:TE   delay 1
 
   # NOTE: I intend to change the syntax of this command to the following
-  #       so that it closely mimics the syntax of the fix bond/change command:
+  #       so that it closely mimics the syntax of the fix bond/modify command:
   #
   #fix tr1  all  bond/new     100   delay 1      &
   #    atoms @atom:TF  @atom:TF and
@@ -17,7 +17,7 @@ write_once("system.in.transitions") {
   # -> atoms @atom:TE  @atom:TE and bond @bond:F
 
   # Transition 2: Destabilize dimers (only trimers are stable)
-  fix tr2  all  bond/change     100   delay 2     &
+  fix tr2  all  bond/modify     100   delay 2     &
      atoms @atom:TE  @atom:TE and prob 0.9 seed 1234 &
   -> atoms @atom:TF  @atom:TF and bond BREAK
 
@@ -27,43 +27,43 @@ write_once("system.in.transitions") {
     inew @atom:TB jnew @atom:TE    delay 3
 
   # NOTE: I intend to change the syntax of this command to the following:
-  #       so that it closely mimics the syntax of the fix bond/change command
+  #       so that it closely mimics the syntax of the fix bond/modify command
   #fix tr3  all  bond/new     100   delay 3                  &
   #   atoms @atom:TE @atom:TF and distance <= 7.1 and prob 0.25 &
   #-> atoms @atom:TB @atom:TE and bond @bond:F and angle @angle:S * * *
 
   # Transitions 4 and 5: Hydrolize ATP  (ATP -> ADP)
-  #  Here I am using fix "bond/change" to modify only one atom at a time.
+  #  Here I am using fix "bond/modify" to modify only one atom at a time.
   #  (In the future, I'll create a new fix with this functionality and
-  #   name it "atom/change" instead of "bond/change")
-  fix tr4  all  bond/change     100   delay 4         &
+  #   name it "atom/change" instead of "bond/modify")
+  fix tr4  all  bond/modify     100   delay 4         &
       atom @atom:TB and prob 0.00015 seed 1234 -> atom @atom:DB 
 
-  fix tr5  all  bond/change     100   delay 5         &
+  fix tr5  all  bond/modify     100   delay 5         &
       atom @atom:TE and prob 0.00015 seed 1234 -> atom @atom:DE
 
   # Transitions 6-9: Depolymerize ADP-bound ParM at the end (DE)
-  fix tr6  all  bond/change     100   delay 6          &
+  fix tr6  all  bond/modify     100   delay 6          &
       atoms @atom:DB @atom:DE and prob 0.03 seed 123 &
    -> atoms @atom:DE @atom:DF and bond BREAK
 
-  fix tr7  all  bond/change     100   delay 7          &
+  fix tr7  all  bond/modify     100   delay 7          &
       atoms @atom:DE @atom:DE and prob 0.03 seed 123 &
    -> atoms @atom:DF @atom:DF and bond BREAK
 
-  fix tr8  all  bond/change     100   delay 8       &
+  fix tr8  all  bond/modify     100   delay 8       &
       atoms @atom:TB @atom:DE and prob 0.03 seed 123 &
    -> atoms @atom:TE @atom:DF and bond BREAK
 
-  fix tr9  all  bond/change     100   delay 9      &
+  fix tr9  all  bond/modify     100   delay 9      &
      atoms @atom:TE  @atom:DE and prob 0.8 seed 123 &
   -> atoms @atom:TF  @atom:DF and bond BREAK
 
   # Transition 10: Recycle ATP -> ADP (bound to ParM)
-  #  Here I am using fix bond/change to modify only one atom at a time.
+  #  Here I am using fix bond/modify to modify only one atom at a time.
   #  (In the future, I'll create a new fix with this functionality and
-  #   name it "atom/change" instead of "bond/change")
-  fix tr10 all  "bond/change"     100   delay 10        &
+  #   name it "atom/change" instead of "bond/modify")
+  fix tr10 all  "bond/modify"     100   delay 10        &
       atom @atom:DF and prob 0.00008 -> atom @atom:TF  
 }
 
