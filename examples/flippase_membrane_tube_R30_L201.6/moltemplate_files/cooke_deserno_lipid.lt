@@ -1,0 +1,23 @@
+import "cooke_deserno_lipid_force_field.lt"
+
+# CDlipid is a lipid model from:
+# "Tunable generic model for fluid bilayer membranes"
+# Cooke IR, Kremer K, Deserno M, Physical Review E, 2005
+# (Author: David Stelter, BU)
+
+CDlipid inherits CDforcefield {
+  # 3-bead model of COOKE, KREMER, DESERNO
+  write("Data Atoms") {
+    $atom:h   $mol:. @atom:H  0.0   0.00   0.00   2.46
+    $atom:t1  $mol:. @atom:T  0.0   0.00   0.00   1.51
+    $atom:t2  $mol:. @atom:T  0.0   0.00   0.00   0.56
+  }
+  write("Data Bonds") {
+    $bond:b1    @bond:B   $atom:h   $atom:t1
+    $bond:b2    @bond:B   $atom:t1  $atom:t2
+  }
+  write("Data Angles") {
+    $angle:a1   @angle:An  $atom:h   $atom:t1   $atom:t2
+  }
+}  # CDlipid
+

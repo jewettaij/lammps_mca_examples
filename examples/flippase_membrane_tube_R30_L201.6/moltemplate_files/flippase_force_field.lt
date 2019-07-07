@@ -1,0 +1,99 @@
+import "cooke_deserno_lipid_force_field.lt"
+
+FlippaseForceField inherits CDforcefield {
+  # bonded interactions which control the flippase' behavior:
+  write_once("In Settings") {
+    bond_coeff @bond:Capture  harmonic  30.0 1.178585
+    bond_coeff @bond:Pull  table table_bonds.dat PULLING_FORCE
+    #bond_coeff @bond:Pull     harmonic  6.0  1.178585
+    #bond_coeff @bond:PullSoft harmonic  2.0  1.178585
+  }
+
+  # bonded interactions that help inclusions keep their shape:
+  write_once("In Settings") {
+    bond_coeff     @bond:C     harmonic  100.0 1.178585
+    angle_coeff    @angle:Cb   harmonic  100.0 90.0
+    dihedral_coeff @dihedral:C charmm    100.0 1 0 0.0
+  }
+  # (oddly, setting all coeffs to zero still causes explosions
+  #  for now, just use fix_rigid to immobilize the inclusion...)
+
+  # ForceField parameters and atom types specific to Flippases
+  write_once("Data Masses") {
+    @atom:A  1.0
+    @atom:At 1.0
+    @atom:AT 1.0
+    @atom:B  1.0
+    @atom:Bt 1.0
+    @atom:BT 1.0
+    @atom:Ht 1.0
+  }
+  write_once("In Settings") {
+    bond_coeff @bond:AB  harmonic  0.0  4.90  #(K=0  no need to exert force)
+
+    # All of these newly introduced beads interact exactly like head-beads
+    # in the original Cooke & Deserno model.
+    # Unfortunately, since we are using a tabular non-bonded force-field
+    # automatic Lorenz-Berthelot mixing rules cannot be used.  Instead
+    # we must define interactions for every pair of atom types.  This
+    # provides an incentive to reduce the number of atom types which use
+    # tabular non-bonded potentials, or use Lennard-Jones for them instead.
+
+    pair_coeff @atom:A  @atom:A   table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:A  @atom:At  table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:A  @atom:AT  table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:A  @atom:B   table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:A  @atom:Bt  table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:A  @atom:BT  table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:A  @atom:Ht  table table_nonbonded_CD.dat HEAD_HEAD
+
+    pair_coeff @atom:At @atom:At  table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:At @atom:AT  table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:At @atom:B   table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:At @atom:Bt  table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:At @atom:BT  table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:At @atom:Ht  table table_nonbonded_CD.dat HEAD_HEAD
+
+    pair_coeff @atom:AT @atom:AT  table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:AT @atom:B   table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:AT @atom:Bt  table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:AT @atom:BT  table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:AT @atom:Ht  table table_nonbonded_CD.dat HEAD_HEAD
+
+    pair_coeff @atom:B  @atom:B   table table_nonbonded_flippases_repel.dat FLIPPASES
+    pair_coeff @atom:B  @atom:Bt  table table_nonbonded_flippases_repel.dat FLIPPASES
+    pair_coeff @atom:B  @atom:BT  table table_nonbonded_flippases_repel.dat FLIPPASES
+    pair_coeff @atom:B  @atom:Ht  table table_nonbonded_CD.dat HEAD_HEAD
+
+    pair_coeff @atom:Bt @atom:Bt  table table_nonbonded_flippases_repel.dat FLIPPASES
+    pair_coeff @atom:Bt @atom:BT  table table_nonbonded_flippases_repel.dat FLIPPASES
+    pair_coeff @atom:Bt @atom:Ht  table table_nonbonded_CD.dat HEAD_HEAD
+
+    pair_coeff @atom:BT @atom:BT  table table_nonbonded_flippases_repel.dat FLIPPASES
+    pair_coeff @atom:BT @atom:Ht  table table_nonbonded_CD.dat HEAD_HEAD
+
+    pair_coeff @atom:Ht @atom:Ht  table table_nonbonded_CD.dat HEAD_HEAD
+
+    pair_coeff @atom:H @atom:A  table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:H @atom:At table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:H @atom:AT table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:H @atom:B  table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:H @atom:Bt table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:H @atom:BT table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff @atom:H @atom:Ht table table_nonbonded_CD.dat HEAD_HEAD
+
+    pair_coeff @atom:T @atom:A  table table_nonbonded_CD.dat HEAD_TAIL
+    pair_coeff @atom:T @atom:At table table_nonbonded_CD.dat HEAD_TAIL
+    pair_coeff @atom:T @atom:AT table table_nonbonded_CD.dat HEAD_TAIL
+    pair_coeff @atom:T @atom:B  table table_nonbonded_CD.dat HEAD_TAIL
+    pair_coeff @atom:T @atom:Bt table table_nonbonded_CD.dat HEAD_TAIL
+    pair_coeff @atom:T @atom:BT table table_nonbonded_CD.dat HEAD_TAIL
+    pair_coeff @atom:T @atom:Ht table table_nonbonded_CD.dat HEAD_TAIL
+  }  
+  write_once("In Init") {
+    #special_bonds   lj 0.0 1.0 1.0 #<--original settings used in Cooke&Deserno(2005)
+    special_bonds   lj 1.0 1.0 1.0  #<--recommened settings for active matter sims
+    bond_style hybrid harmonic fene table linear 21
+  }
+}
+

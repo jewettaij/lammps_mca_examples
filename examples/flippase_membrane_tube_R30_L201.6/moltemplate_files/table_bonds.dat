@@ -1,0 +1,52 @@
+# This is a table describing the force between a recently captured lipid
+# and the corresponding site of a "flippase" motor located on the opposite
+# side of the membrane.  This force will pull the lipid from one side of
+# the membrane to the other.
+#    This is the only requirement.  The precise strength of the force does 
+# not matter.  I just wanted to produce a force which is strong enough to pull 
+# the lipid from one side of the membrane to the other quickly,
+# WITHOUT ripping the lipid completley out of the membrane,
+# or being forced to use an unreasonably small timestep
+# (or an unreasonably high langevin damping parameter).
+#    I found that using an ordinary harmonic spring (Energy = (k/2)*r^2
+# tended to either generated a force which was too weak at small separations, r,
+# or an enormous force at large separations (causing numerical instability).
+# So I tried using a tabular potential, and I played with the force values
+# (4th column) in the table by hand until the system was behaving reasonably.
+#    Actually it is common that when making new bonds during a simulation (and
+# also bonded angular interactions), the forces and energies will often jump
+# discontinously. Care must be taken to make sure that the simulation is stable.
+# Since the precise form of the interaction between lipid and flippase motor
+# does not matter in this approximation, (only the outcome matters),
+# we are free to choose whichever pulling force is convenient.
+#  -Andrew 2016-8-11
+
+PULLING_FORCE
+N 21 FP 0.0 -8.0 EQ 1.3
+
+1 0.0000001 1e-07 -1.0
+2 0.5 0.5 -1.0
+3 1.0 1.25 -2.0
+4 1.5 2.25 -2.0
+5 2.0 3.625 -3.5
+6 2.5 5.75 -5.0
+7 3.0 8.75 -7.0
+8 3.5 12.5 -8.0
+9 4.0 16.5 -8.0
+10 4.5 20.75 -9.0
+11 5.0 25.25 -9.0
+12 5.5 30 -10.0
+13 6.0 35 -10.0
+14 6.5 40 -10.0
+15 7.0 45 -10.0
+16 7.5 50 -10.0
+17 8.0 55 -10.0
+18 8.5 60 -10.0
+19 9.0 65 -10.0
+20 9.5 70 -10.0
+21 10.0 75 -10.0
+
+# Note to self:
+# The potential energy (3rd) column was generated using this crude awk script:
+# (but these energies are not important for the simulation and can be ignored)
+# awk 'BEGIN{u=-0.5; rp=-0.5; fp=-1.0} {r=$2; f=$4; fave=0.5*(f+fp); dr=r-rp; u+=-dr*fave; print $1" "$2" "u" "$4; fp=f; rp=r}'

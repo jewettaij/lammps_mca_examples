@@ -1,0 +1,30 @@
+
+CDforcefield {
+  write_once("In Init") {
+    units           lj
+    atom_style      full
+
+    bond_style      hybrid fene harmonic
+    angle_style     hybrid harmonic
+    pair_style      hybrid table linear 128
+    pair_modify     shift yes
+    special_bonds   lj 0.0 1.0 1.0
+
+    neigh_modify    every 1 delay 1
+    neighbor        0.3 bin
+  }
+
+  write_once("In Settings") {
+    pair_coeff  @atom:H @atom:H table table_nonbonded_CD.dat HEAD_HEAD
+    pair_coeff  @atom:H @atom:T table table_nonbonded_CD.dat HEAD_TAIL
+        # (Note: The "HEAD_TAIL" table is the same as the "HEAD_HEAD" table.)
+    pair_coeff  @atom:T @atom:T table table_nonbonded_CD.dat TAIL_TAIL_Wc=1.6
+    bond_coeff  @bond:B    fene      30.0 1.5 1.0 1.0
+    angle_coeff @angle:An  harmonic  10.0 180
+  }
+
+  write_once("Data Masses") {
+    @atom:H  1.0 ## Head Bead
+    @atom:T  1.0 ## Tail Bead
+  }
+}

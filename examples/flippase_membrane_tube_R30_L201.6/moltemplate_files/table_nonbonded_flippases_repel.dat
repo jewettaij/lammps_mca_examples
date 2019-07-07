@@ -1,0 +1,15 @@
+# A numerically stable repulsive force between flippase molecules.
+# Problem: If two flippase motors get too close together, a lipid bound
+# to one flippase might get confused and attempt to form a second
+# bond with the other nearby flippase motor.  I worry this could corrupt 
+# the logic of the motors, and effectively deactivate both of them.
+# The goal of this repulsive force is to reduce the probability that two 
+# flippase motors will get close enough together to allow this to happen.
+
+FLIPPASES
+N 4 R 0.000001 3.000000 FPRIME 0.0 0.0
+
+1 0.000001 30.000000 10.000000
+2 1.000000 20.000000 10.000000
+3 2.000000 10.000000 10.000000
+4 3.000000  0.000000 10.000000

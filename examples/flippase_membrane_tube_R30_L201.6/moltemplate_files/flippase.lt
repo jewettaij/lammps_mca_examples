@@ -1,0 +1,144 @@
+import "flippase_force_field.lt"
+
+
+# One way to form a "membrane inclusion" is to bundle several lipids
+# together into a larger object and immobilize them.  The resulting object will
+# be comfortable in the membrane, just as the original lipids were,
+# This way multiple "inclusions" will not aggregate as quickly.
+
+# An "InclColumn" consists of two lipids in opposite leaflets bonded together
+# Later, we will bundle several InclColumns to make a "SimpleInclusion".
+
+InclColumn inherits FlippaseForceField {
+  write("Data Atoms") {
+    # AtomID  MolID    AtomType charge   x      y      z
+    $atom:h1  $mol:... @atom:B  0.0    0.00   0.00  -2.45
+    $atom:t11 $mol:... @atom:T  0.0    0.00   0.00  -1.47
+    $atom:t12 $mol:... @atom:T  0.0    0.00   0.00  -0.49
+    $atom:t22 $mol:... @atom:T  0.0    0.00   0.00   0.49
+    $atom:t21 $mol:... @atom:T  0.0    0.00   0.00   1.47
+    $atom:h2  $mol:... @atom:B  0.0    0.00   0.00   2.45
+  }
+} #Column
+
+
+
+# A "SimpleInclusion" is a bundle of 7 "InclColumn"s.
+
+SimpleInclusion inherits FlippaseForceField {
+  create_var { $mol:. }  #make all atoms share the same molecule-ID
+                         #even if they belong to different "InclColumn"s
+
+  # We make a 3x3 hexagonal array of them, and delete two of the corners,
+  # and what remains is a hexagon containing 7 InclColumns (1 in the middle).
+  # (NOTE: We could alternately have created and placed each InclColumn object
+  #  individually using 7 different "new InclColumn.move(x,y,z)" commands.)
+
+  columns = new InclColumn [3].move(1.178585,    0,     0)
+                           [3].move(0.589293, 1.02068, 0)
+  
+  delete columns[0][0]
+  delete columns[2][2]
+
+  # We want the atoms in each inclusion to be rigid, so we define
+  # a group which includes all of the atoms in this molecule.  We
+  # can pass it as an argument to "fix rigid" later if we want to.
+
+  write("In Settings") {
+    group gInclusions molecule $mol:.
+  }
+
+  write_once("In Init") {
+    dihedral_style hybrid charmm
+  }
+}
+
+
+
+# A Flippase is a special type of inclusion where we replace some of the atoms
+# with "A" atoms, and connect them directly to the "B" atoms with "AB" bonds.
+# Then we define rules which allow atoms of type "A" to bind to lipid "H" head
+# groups and pull them to the "B" atoms on the opposite side of the membrane
+
+Flippase inherits SimpleInclusion {
+
+  # Modify the atoms where the lipids will bind and be pulled:
+  write("Data Atoms") {
+    $atom:columns[2][1]/h1  $mol:... @atom:A  0.0  2.9464625 1.02068 -2.45
+    $atom:columns[2][1]/h2  $mol:... @atom:B  0.0  2.9464625 1.02068  2.45
+  }
+
+  # Bond them together so they can communicate
+  write("Data Bonds") {
+    $bond:ab1 @bond:AB  $atom:columns[2][1]/h1 $atom:columns[2][1]/h2
+  }
+
+  write_once("In Transitions") {
+    # Capture a lipid when it's "Head" bead strays to close to the "A" bead:
+    fix tr1 all bond/new    100                                             &
+       @atom:A  @atom:H  1.35  @bond:Capture   prob 1.0 1234                &
+       inew @atom:At jnew @atom:Ht  delay 1
+    #fix tr1 all bond/new    100  delay 1                                   &
+    #   atoms @atom:A  @atom:H  and  distance <= 1.35  and  prob 0.1        &
+    #-> atoms @atom:At @atom:Ht  and  bond @bond:Capture
+
+    # Inform the bead at the other end of the flippase of the captured lipid:
+    fix tr2 all bond/change 100  delay 2                                    &
+       atoms @atom:At @atom:B   and  bond @bond:AB                          &
+    -> atoms @atom:At @atom:Bt
+
+    # Create a bond that will pull the captured lipid's head to Bt:
+    fix tr3 all bond/new    100                                             &
+       @atom:Bt @atom:Ht  5.5   @bond:Pull                                  &
+       inew @atom:BT  jnew @atom:Ht   delay 3
+    #fix tr3 all bond/new    100  delay 3                                   &
+    #   atoms @atom:Bt @atom:Ht  and  distance <= 5.5                       
+    #-> atoms @atom:BT @atom:Ht  and  bond @bond:Pull
+
+    # Let the original atom ("A") know it's safe to release the lipid:
+
+    # First change the type back to "A".
+    fix tr4 all bond/change 100  delay 4                                    &
+       atoms @atom:At @atom:BT                                              &
+    -> atoms @atom:AT @atom:BT
+
+    # Then break the bond connecting "A" to the lipid's "Head" bead:
+    fix tr5 all bond/change 100  delay 5                                    &
+       atoms @atom:AT @atom:Ht                                              &
+    -> atoms @atom:AT @atom:H  and  bond BREAK
+
+    # When the lipids head group arrives at the other side
+    # break the bond connecting it to the Flippase bead ("B"):
+    fix tr6 all bond/change 100  delay 6                                    &
+       atoms @atom:BT @atom:H  and  distance <= 1.3                         &
+    -> atoms @atom:B  @atom:H  and  bond BREAK
+
+    # Finally change the first bead back to the "A" state,
+    # enabling it to accept new lipids in the future:
+    fix tr7 all bond/change 100  delay 7                                    &
+       atoms @atom:AT @atom:B                                               &
+    -> atoms @atom:A  @atom:B
+
+    neighbor 5.5 bin  #<--make sure this number is at least as large
+                      # as the largest "bond/new" distance threshold
+  }
+
+  # Some variants of this model have 2 motors per flippase to increase speed. If
+  # you want this behavior, move the following lines to Data Atoms & Data Bonds
+  #  $atom:columns[0][1]/h1  $mol:... @atom:A  0.0  0.589293  1.02068 -2.45
+  #  $atom:columns[0][1]/h2  $mol:... @atom:B  0.0  0.589293  1.02068  2.45
+  #  $bond:ab2 @bond:AB  $atom:columns[0][1]/h1 $atom:columns[0][1]/h2
+
+} # Flippase
+
+
+
+
+
+
+
+
+
+# commenting out:
+#import "column_bond_constraints.lt"  #<-- not needed if fix rigid is used
+

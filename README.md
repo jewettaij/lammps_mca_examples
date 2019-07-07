@@ -15,8 +15,8 @@ which can make decisions in response to collisions
 When connected together, such agents can make intelligent decisions
 of arbitrary complexity, typically with just a few lines of code.
 
-Videos of MCA simulations were too large to include in this repository,
-However some MCA videos are available on youtube.
+Although videos of MCA simulations were too large to include in this repository,
+some can be found here:
 
    https://www.youtube.com/watch?v=0cuEeCdyokU
 
@@ -26,9 +26,9 @@ However some MCA videos are available on youtube.
 
 ## WARNING: These examples are not yet ready for public use.
 
-This repository was intended as a private place to back up files
-before releasing them formally.
-(I an not willing to pay for private repositories on github.)
+This repository was intended as a private place
+to back up files that I eventually plan to release.
+
 Please be warned that the LAMMPS MCA code needed by these examples
 is currently buggy, and will change significantly
 (or may be incorporated into other existing fixes).
@@ -41,7 +41,7 @@ will change significantly over time.
 These examples require
 [LAMMPS](https://lammps.sandia.gov), 
 [MOLTEMPLATE](https://moltemplate.org), 
-and the code for the new MCA lammps fix.
+and the code for the new MCA lammps fixes.
 (This code was intentionally omitted but will be released soon.
  -A 2019-7-07)
 

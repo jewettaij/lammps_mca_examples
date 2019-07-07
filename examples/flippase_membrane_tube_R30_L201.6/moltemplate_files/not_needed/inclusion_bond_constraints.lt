@@ -1,0 +1,106 @@
+
+  write("Data Bonds") {
+    $bond:ch1_10_20 @bond:C  $atom:columns[1][0]/h1 $atom:columns[2][0]/h1
+    $bond:ch1_01_11 @bond:C  $atom:columns[0][1]/h1 $atom:columns[1][1]/h1
+    $bond:ch1_11_21 @bond:C  $atom:columns[1][1]/h1 $atom:columns[2][1]/h1
+    $bond:ch1_02_12 @bond:C  $atom:columns[0][2]/h1 $atom:columns[1][2]/h1
+    $bond:ch1_01_02 @bond:C  $atom:columns[0][1]/h1 $atom:columns[0][2]/h1
+    $bond:ch1_10_11 @bond:C  $atom:columns[1][0]/h1 $atom:columns[1][1]/h1
+    $bond:ch1_11_12 @bond:C  $atom:columns[1][1]/h1 $atom:columns[1][2]/h1
+    $bond:ch1_20_21 @bond:C  $atom:columns[2][0]/h1 $atom:columns[2][1]/h1
+    $bond:ch1_01_10 @bond:C  $atom:columns[0][1]/h1 $atom:columns[1][0]/h1
+    $bond:ch1_02_11 @bond:C  $atom:columns[0][2]/h1 $atom:columns[1][1]/h1
+    $bond:ch1_11_20 @bond:C  $atom:columns[1][1]/h1 $atom:columns[2][0]/h1
+    $bond:ch1_12_21 @bond:C  $atom:columns[1][2]/h1 $atom:columns[2][1]/h1
+
+    $bond:ct11_10_20 @bond:C  $atom:columns[1][0]/t11 $atom:columns[2][0]/t11
+    $bond:ct11_01_11 @bond:C  $atom:columns[0][1]/t11 $atom:columns[1][1]/t11
+    $bond:ct11_11_21 @bond:C  $atom:columns[1][1]/t11 $atom:columns[2][1]/t11
+    $bond:ct11_02_12 @bond:C  $atom:columns[0][2]/t11 $atom:columns[1][2]/t11
+    $bond:ct11_01_02 @bond:C  $atom:columns[0][1]/t11 $atom:columns[0][2]/t11
+    $bond:ct11_10_11 @bond:C  $atom:columns[1][0]/t11 $atom:columns[1][1]/t11
+    $bond:ct11_11_12 @bond:C  $atom:columns[1][1]/t11 $atom:columns[1][2]/t11
+    $bond:ct11_20_21 @bond:C  $atom:columns[2][0]/t11 $atom:columns[2][1]/t11
+    $bond:ct11_01_10 @bond:C  $atom:columns[0][1]/t11 $atom:columns[1][0]/t11
+    $bond:ct11_02_11 @bond:C  $atom:columns[0][2]/t11 $atom:columns[1][1]/t11
+    $bond:ct11_11_20 @bond:C  $atom:columns[1][1]/t11 $atom:columns[2][0]/t11
+    $bond:ct11_12_21 @bond:C  $atom:columns[1][2]/t11 $atom:columns[2][1]/t11
+
+    $bond:ct12_10_20 @bond:C  $atom:columns[1][0]/t12 $atom:columns[2][0]/t12
+    $bond:ct12_01_11 @bond:C  $atom:columns[0][1]/t12 $atom:columns[1][1]/t12
+    $bond:ct12_11_21 @bond:C  $atom:columns[1][1]/t12 $atom:columns[2][1]/t12
+    $bond:ct12_02_12 @bond:C  $atom:columns[0][2]/t12 $atom:columns[1][2]/t12
+    $bond:ct12_01_02 @bond:C  $atom:columns[0][1]/t12 $atom:columns[0][2]/t12
+    $bond:ct12_10_11 @bond:C  $atom:columns[1][0]/t12 $atom:columns[1][1]/t12
+    $bond:ct12_11_12 @bond:C  $atom:columns[1][1]/t12 $atom:columns[1][2]/t12
+    $bond:ct12_20_21 @bond:C  $atom:columns[2][0]/t12 $atom:columns[2][1]/t12
+    $bond:ct12_01_10 @bond:C  $atom:columns[0][1]/t12 $atom:columns[1][0]/t12
+    $bond:ct12_02_11 @bond:C  $atom:columns[0][2]/t12 $atom:columns[1][1]/t12
+    $bond:ct12_11_20 @bond:C  $atom:columns[1][1]/t12 $atom:columns[2][0]/t12
+    $bond:ct12_12_21 @bond:C  $atom:columns[1][2]/t12 $atom:columns[2][1]/t12
+
+    $bond:ct22_10_20 @bond:C  $atom:columns[1][0]/t22 $atom:columns[2][0]/t22
+    $bond:ct22_01_11 @bond:C  $atom:columns[0][1]/t22 $atom:columns[1][1]/t22
+    $bond:ct22_11_21 @bond:C  $atom:columns[1][1]/t22 $atom:columns[2][1]/t22
+    $bond:ct22_02_12 @bond:C  $atom:columns[0][2]/t22 $atom:columns[1][2]/t22
+    $bond:ct22_01_02 @bond:C  $atom:columns[0][1]/t22 $atom:columns[0][2]/t22
+    $bond:ct22_10_11 @bond:C  $atom:columns[1][0]/t22 $atom:columns[1][1]/t22
+    $bond:ct22_11_12 @bond:C  $atom:columns[1][1]/t22 $atom:columns[1][2]/t22
+    $bond:ct22_20_21 @bond:C  $atom:columns[2][0]/t22 $atom:columns[2][1]/t22
+    $bond:ct22_01_10 @bond:C  $atom:columns[0][1]/t22 $atom:columns[1][0]/t22
+    $bond:ct22_02_11 @bond:C  $atom:columns[0][2]/t22 $atom:columns[1][1]/t22
+    $bond:ct22_11_20 @bond:C  $atom:columns[1][1]/t22 $atom:columns[2][0]/t22
+    $bond:ct22_12_21 @bond:C  $atom:columns[1][2]/t22 $atom:columns[2][1]/t22
+
+    $bond:ct21_10_20 @bond:C  $atom:columns[1][0]/t21 $atom:columns[2][0]/t21
+    $bond:ct21_01_11 @bond:C  $atom:columns[0][1]/t21 $atom:columns[1][1]/t21
+    $bond:ct21_11_21 @bond:C  $atom:columns[1][1]/t21 $atom:columns[2][1]/t21
+    $bond:ct21_02_12 @bond:C  $atom:columns[0][2]/t21 $atom:columns[1][2]/t21
+    $bond:ct21_01_02 @bond:C  $atom:columns[0][1]/t21 $atom:columns[0][2]/t21
+    $bond:ct21_10_11 @bond:C  $atom:columns[1][0]/t21 $atom:columns[1][1]/t21
+    $bond:ct21_11_12 @bond:C  $atom:columns[1][1]/t21 $atom:columns[1][2]/t21
+    $bond:ct21_20_21 @bond:C  $atom:columns[2][0]/t21 $atom:columns[2][1]/t21
+    $bond:ct21_01_10 @bond:C  $atom:columns[0][1]/t21 $atom:columns[1][0]/t21
+    $bond:ct21_02_11 @bond:C  $atom:columns[0][2]/t21 $atom:columns[1][1]/t21
+    $bond:ct21_11_20 @bond:C  $atom:columns[1][1]/t21 $atom:columns[2][0]/t21
+    $bond:ct21_12_21 @bond:C  $atom:columns[1][2]/t21 $atom:columns[2][1]/t21
+
+    $bond:ch2_10_20 @bond:C  $atom:columns[1][0]/h2 $atom:columns[2][0]/h2
+    $bond:ch2_01_11 @bond:C  $atom:columns[0][1]/h2 $atom:columns[1][1]/h2
+    $bond:ch2_11_21 @bond:C  $atom:columns[1][1]/h2 $atom:columns[2][1]/h2
+    $bond:ch2_02_12 @bond:C  $atom:columns[0][2]/h2 $atom:columns[1][2]/h2
+    $bond:ch2_01_02 @bond:C  $atom:columns[0][1]/h2 $atom:columns[0][2]/h2
+    $bond:ch2_10_11 @bond:C  $atom:columns[1][0]/h2 $atom:columns[1][1]/h2
+    $bond:ch2_11_12 @bond:C  $atom:columns[1][1]/h2 $atom:columns[1][2]/h2
+    $bond:ch2_20_21 @bond:C  $atom:columns[2][0]/h2 $atom:columns[2][1]/h2
+    $bond:ch2_01_10 @bond:C  $atom:columns[0][1]/h2 $atom:columns[1][0]/h2
+    $bond:ch2_02_11 @bond:C  $atom:columns[0][2]/h2 $atom:columns[1][1]/h2
+    $bond:ch2_11_20 @bond:C  $atom:columns[1][1]/h2 $atom:columns[2][0]/h2
+    $bond:ch2_12_21 @bond:C  $atom:columns[1][2]/h2 $atom:columns[2][1]/h2
+  }
+
+  write("Data Angles") {
+    $angle:ah1_01 @angle:Cb $atom:columns[0][1]/h1  $atom:columns[1][1]/h1 $atom:columns[1][1]/t11
+    $angle:ah1_10 @angle:Cb $atom:columns[1][0]/h1  $atom:columns[1][1]/h1 $atom:columns[1][1]/t11
+    $angle:ah1_02 @angle:Cb $atom:columns[0][2]/h1  $atom:columns[1][1]/h1 $atom:columns[1][1]/t11
+    $angle:ah1_20 @angle:Cb $atom:columns[2][0]/h1  $atom:columns[1][1]/h1 $atom:columns[1][1]/t11
+    $angle:ah1_12 @angle:Cb $atom:columns[1][2]/h1  $atom:columns[1][1]/h1 $atom:columns[1][1]/t11
+    $angle:ah1_21 @angle:Cb $atom:columns[2][1]/h1  $atom:columns[1][1]/h1 $atom:columns[1][1]/t11
+
+    $angle:ah2_01 @angle:Cb $atom:columns[0][1]/h2  $atom:columns[1][1]/h2 $atom:columns[1][1]/t11
+    $angle:ah2_10 @angle:Cb $atom:columns[1][0]/h2  $atom:columns[1][1]/h2 $atom:columns[1][1]/t11
+    $angle:ah2_02 @angle:Cb $atom:columns[0][2]/h2  $atom:columns[1][1]/h2 $atom:columns[1][1]/t11
+    $angle:ah2_20 @angle:Cb $atom:columns[2][0]/h2  $atom:columns[1][1]/h2 $atom:columns[1][1]/t11
+    $angle:ah2_12 @angle:Cb $atom:columns[1][2]/h2  $atom:columns[1][1]/h2 $atom:columns[1][1]/t11
+    $angle:ah2_21 @angle:Cb $atom:columns[2][1]/h2  $atom:columns[1][1]/h2 $atom:columns[1][1]/t11
+
+  }
+
+  #write("Data Dihedrals") {
+  #  $dihedral:d_01 @dihedral:C $atom:columns[0][1]/h1 $atom:columns[1][1]/h1 $atom:columns[1][1]/h2 $atom:columns[0][1]/h2
+  #  $dihedral:d_10 @dihedral:C $atom:columns[1][0]/h1 $atom:columns[1][1]/h1 $atom:columns[1][1]/h2 $atom:columns[1][0]/h2
+  #  $dihedral:d_02 @dihedral:C $atom:columns[0][2]/h1 $atom:columns[1][1]/h1 $atom:columns[1][1]/h2 $atom:columns[0][2]/h2
+  #  $dihedral:d_20 @dihedral:C $atom:columns[2][0]/h1 $atom:columns[1][1]/h1 $atom:columns[1][1]/h2 $atom:columns[2][0]/h2
+  #  $dihedral:d_12 @dihedral:C $atom:columns[1][2]/h1 $atom:columns[1][1]/h1 $atom:columns[1][1]/h2 $atom:columns[1][2]/h2
+  #  $dihedral:d_21 @dihedral:C $atom:columns[2][1]/h1 $atom:columns[1][1]/h1 $atom:columns[1][1]/h2 $atom:columns[2][1]/h2
+  #}

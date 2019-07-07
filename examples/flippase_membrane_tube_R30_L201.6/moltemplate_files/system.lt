@@ -1,0 +1,58 @@
+# Description:
+# Make a cylindrical lipid bilayer containing "Flippase" motors.
+
+# First define the molecules we will need:
+
+import "cooke_deserno_lipid.lt"  # Define the "CDlipid" molecules
+import "flippase.lt"             # Define the "Flippase" molecules
+
+
+# For reference, if you wanted to create one continuous cylinder of "CDlipid"s,
+# then you would use commands similar to the following:
+#l_out=new CDlipid.move(0,0,30.0)
+#      [173].rot(2.080925, 1,0,0)
+#      [192].rot(1.0404625,1,0,0).move(1.05, 0, 0)
+#
+#l_in = new CDlipid.rot(180,1,0,0).move(0,0,30.0)
+#      [147].rot(2.448980, 1,0,0)
+#      [192].rot(1.224490,1,0,0).move(1.05, 0, 0)
+
+
+
+# Instead we divide the cylinder into "FL_patch"es containing one flippase each.
+# Then we use them to build larger cylinder so that the flippases
+# will (initially at t=0) be evenly spaced along the surface.
+
+FL_patch {
+  l_out=new CDlipid.move(0,0,30.0)
+        [29].rot(2.0689655, 1,0,0)
+        [24].rot(1.1,1,0,0).move(1.05, 0, 0)
+
+  l_in = new CDlipid.rot(180,1,0,0).move(0,0,30.0)
+        [25].rot(2.4, 1,0,0)
+        [24].rot(1.1,1,0,0).move(1.05, 0, 0)
+
+  # Delete some lipids so we have room to add the "flippase"
+  delete l_out[1-2][0]
+  delete l_out[0-2][1]
+  delete l_out[0-1][2]
+
+  delete l_in[1-2][0]
+  delete l_in[0-2][1]
+  delete l_in[0-1][2]
+
+  inclusion = new Flippase.rot(-90.0,0,0,1).move(0,0,30.0)
+}
+
+# Now create multiple patches and assemble them into a continuous cylinder:
+patches = new FL_patch [6].rot(60.0,1,0,0)
+                       [8].move(25.2, 0, 0)
+
+
+write_once("Data Boundary") {                                        
+    0.0      201.6    xlo xhi
+  -60.0       60.0    ylo yhi
+  -60.0       60.0    zlo zhi
+}
+
+

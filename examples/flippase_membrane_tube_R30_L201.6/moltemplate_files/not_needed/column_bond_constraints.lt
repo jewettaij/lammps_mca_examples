@@ -1,0 +1,19 @@
+
+InclColumn inherits FlippaseForceField {  #add more details to "InclColumn"
+  write("Data Bonds") {
+    $bond:b11    @bond:B   $atom:h1  $atom:t11
+    $bond:b12    @bond:B   $atom:t11 $atom:t12
+    $bond:b122   @bond:B   $atom:t12 $atom:t22
+    $bond:b22    @bond:B   $atom:t21 $atom:t22
+    $bond:b21    @bond:B   $atom:h2  $atom:t21
+  }
+  write("Data Angles") {
+    $angle:an1   @angle:Cs   $atom:h1  $atom:t11 $atom:t12
+    $angle:an2   @angle:Cs   $atom:t11 $atom:t12 $atom:t22
+    $angle:an3   @angle:Cs   $atom:t12 $atom:t22 $atom:t21
+    $angle:an4   @angle:Cs   $atom:t22 $atom:t21 $atom:h2
+  }
+  write_once("In Settings") {
+    angle_coeff    @angle:Cs   harmonic  100.0 180.0
+  }
+}
