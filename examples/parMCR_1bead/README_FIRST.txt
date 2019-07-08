@@ -28,7 +28,7 @@ as the "dynamic instability" found in microtubules and the ParM system.
 I am using custom versions of "fix bond/break" and "fix bond/create"
 (currently named "fix bond/change" and "fix bond/new") which make this possible.
 
-Youtube video of this system:
+A video of this simulation is available online at:
 
 https://www.youtube.com/watch?v=EEbt07vZHew
 (explanation and color legend below)

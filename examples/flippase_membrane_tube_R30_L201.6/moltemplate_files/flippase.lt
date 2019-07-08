@@ -83,7 +83,7 @@ Flippase inherits SimpleInclusion {
     #-> atoms @atom:At @atom:Ht  and  bond @bond:Capture
 
     # Inform the bead at the other end of the flippase of the captured lipid:
-    fix tr2 all bond/change 100  delay 2                                    &
+    fix tr2 all bond/modify 100  delay 2                                    &
        atoms @atom:At @atom:B   and  bond @bond:AB                          &
     -> atoms @atom:At @atom:Bt
 
@@ -98,24 +98,24 @@ Flippase inherits SimpleInclusion {
     # Let the original atom ("A") know it's safe to release the lipid:
 
     # First change the type back to "A".
-    fix tr4 all bond/change 100  delay 4                                    &
+    fix tr4 all bond/modify 100  delay 4                                    &
        atoms @atom:At @atom:BT                                              &
     -> atoms @atom:AT @atom:BT
 
     # Then break the bond connecting "A" to the lipid's "Head" bead:
-    fix tr5 all bond/change 100  delay 5                                    &
+    fix tr5 all bond/modify 100  delay 5                                    &
        atoms @atom:AT @atom:Ht                                              &
     -> atoms @atom:AT @atom:H  and  bond BREAK
 
     # When the lipids head group arrives at the other side
     # break the bond connecting it to the Flippase bead ("B"):
-    fix tr6 all bond/change 100  delay 6                                    &
+    fix tr6 all bond/modify 100  delay 6                                    &
        atoms @atom:BT @atom:H  and  distance <= 1.3                         &
     -> atoms @atom:B  @atom:H  and  bond BREAK
 
     # Finally change the first bead back to the "A" state,
     # enabling it to accept new lipids in the future:
-    fix tr7 all bond/change 100  delay 7                                    &
+    fix tr7 all bond/modify 100  delay 7                                    &
        atoms @atom:AT @atom:B                                               &
     -> atoms @atom:A  @atom:B
 
