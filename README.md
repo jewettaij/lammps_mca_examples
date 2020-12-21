@@ -47,8 +47,8 @@ will change significantly over time.
 These examples require
 [LAMMPS](https://lammps.sandia.gov),
 [MOLTEMPLATE](https://moltemplate.org),
-and the code for the new MCA lammps fixes.
-An early version of this code is available
+and the new code for LAMMPS which enables the MCA features.
+That code (and compilation instructions) is available
 [here](LAMMPS_code_needed).
 Again, this code (and these examples) could change or be deleted in the future.
 
