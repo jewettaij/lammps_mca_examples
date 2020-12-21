@@ -9,7 +9,7 @@ To run these examples, you must:
 1) Obtain the LAMMPS source code.  (https://github.com/lammps/lammps)
 2) Copy the .cpp and .h files in this directory into the *src/*
 subdirectory distributed with LAMMPS
-3) Compile LAMMPS.  Here is one way to do this.
+3) Compile LAMMPS.
 Enter the *src/* subdirectory.  Then enter:
 ```
 make yes-molecule
