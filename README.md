@@ -7,15 +7,18 @@ At the coarse grained level such simulations have been out of reach
 to scientists without writing thousands of lines of custom code
 dedicated to the particular problem they are studying.
 
-This repository contains simple examples of MCA usage in
-[LAMMPS](https://lammps.sandia.gov).
 MCA is a language to describe the behavior of simple "agents"
 which can make decisions in response to collisions
 (or other changes in their local environment).
 When connected together, such agents can make intelligent decisions
 of arbitrary complexity, typically with just a few lines of code.
 
-##### *Note: ODP files require [libre-office](https://www.libreoffice.org) to view.*
+This repository contains simple examples of MCA usage in
+[LAMMPS](https://lammps.sandia.gov), as well as documentation for their use
+in the form of slides for several short talks I gave explaining these examples,
+and [LAMMPS code](LAMMPS_code_needed) needed to make these examples work.
+*(The slides are available in both PDF and ODP format.
+ODP files require [libre-office](https://www.libreoffice.org) to view.)*
 
 Although videos of MCA simulations were too large to include in this repository,
 some can be found here:
@@ -45,10 +48,11 @@ These examples require
 [LAMMPS](https://lammps.sandia.gov),
 [MOLTEMPLATE](https://moltemplate.org),
 and the code for the new MCA lammps fixes.
-(This code was intentionally omitted but will be released soon.
- -A 2019-7-07)
+An early version of this code is available
+[here](LAMMPS_code_needed).
+Again, this code (and these examples) could change or be deleted in the future.
 
 ## License
 
-Although not recommended for use,
-these examples are available under the terms of the MIT license.
+Although not recommended for use, these examples (and code)
+are available under the terms of the MIT license.
