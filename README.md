@@ -1,17 +1,18 @@
 Molecular Cellular Automata Examples for LAMMPS
 ===========
 
-The simulation of complex chains of chemical reactions that make life
-possible cannot be run with traditional molecular dynamics software.
-At the coarse grained level such simulations have been out of reach
-to scientists without writing thousands of lines of custom code
-dedicated to the particular problem they are studying.
+The simulation of complex chains of chemical reactions
+(such as the reactions that make life possible),
+cannot be run with traditional molecular dynamics software.
+At the coarse grained level, such simulations have been out of reach
+to scientists without writing thousands of lines of custom
+simulation code dedicated to the particular problem they are studying.
 
 MCA is a language to describe the behavior of simple "agents"
 which can make decisions in response to collisions
 (or other changes in their local environment).
 When connected together, such agents can make intelligent decisions
-of arbitrary complexity, typically with just a few lines of code.
+of arbitrary complexity, typically with just a few lines of MCA code.
 
 This repository contains simple examples of MCA usage in
 [LAMMPS](https://lammps.sandia.gov), as well as documentation for their use
