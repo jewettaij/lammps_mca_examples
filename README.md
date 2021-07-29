@@ -24,7 +24,7 @@ ODP files require [libre-office](https://www.libreoffice.org) to view.)*
 Although videos of MCA simulations were too large to include in this repository,
 some can be found here:
 
-   https://www.youtube.com/watch?v=0cuEeCdyokU
+   http://moltemplate.org/examples/flippase_membrane_tube.html
 
    https://www.youtube.com/watch?v=QO4LbHGAgxU
 
